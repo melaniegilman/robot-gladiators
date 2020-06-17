@@ -14,7 +14,7 @@ var enemyHealth = 50;
 var enemyAttack = 12;
 
 var fight = function(enemyName) {
-    while(enemyHealth > 0) {
+    while(enemyHealth > 0 && playerHealth > 0) {
     //fight function statements
     //alert users that they are starting the round
   
@@ -35,6 +35,7 @@ var fight = function(enemyName) {
   // check enemy's health
   if (enemyHealth <= 0) {
     window.alert(enemyName + " has died!");
+    break;
   } else {
     window.alert(enemyName + " still has " + enemyHealth + " health left.");
   }
@@ -46,23 +47,31 @@ var fight = function(enemyName) {
   // check player's health
   if (playerHealth <= 0) {
     window.alert(playerName + " has died!");
+    break;
   } 
   else {
     window.alert(playerName + " still has " + playerHealth + " health left.");
   }
-  // if player choses to skip
+  // if player chooses to skip
 } else if (promptFight === "skip" || promptFight === "SKIP") {
+  window.alert(playerName + " has chosen to skip the fight! ");
+} else {
+    window.alert("You need to pick a valid option. Try again!");
+
+// if user picks "skip" confirm and then stop the loop
+if (promptFight === "skip" || promptFight === "SKIP") {
+    // confirm user wants to skip
+    var confirmSkip = window.confirm("Are you sure you'd like to quit?");
   
     // if yes (true), leave fight
     if (confirmSkip) {
       window.alert(playerName + " has decided to skip this fight. Goodbye!");
       // subtract money from playerMoney for skipping
-      playerMoney = playerMoney - 2;
+      playerMoney = playerMoney - 10;
+      console.log("playerMoney", playerMoney)
+      break;
     }
-        // if no (false), ask question again by running fight() again
-    else {
-      fight();
-    }
+  }
     //Log message subtracting money
     console.log(
         playerName + " still has "  + playerMoney + " coins remaining "
@@ -70,6 +79,13 @@ var fight = function(enemyName) {
   }
 }};
 for(var i = 0; i < enemyNames.length; i++) {
+    if (playerHealth > 0) {
+        window.alert("Welcome to Robot Gladiators! Round " + ( i + 1) );
+      }
+      else {
+        window.alert("You have lost your robot in battle! Game Over!");
+        break;
+      }
     var pickedEnemyName = enemyNames[i];
     enemyHealth = 50;
     //call fight function with enemy robot
